@@ -1,0 +1,16 @@
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.jakewharton.rxrelay2:rxrelay:$rxRelayVersion"
+    implementation "javax.inject:javax.inject:$javaxInjectVersion"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.paging:paging-runtime:$archPagingVersion"
+
+
+    testImplementation "io.mockk:mockk:$mockkVersion"
+    testImplementation "junit:junit:$junitVersion"
+}
+

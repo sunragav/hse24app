@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">catalog</string>
+    <string name="btn_expand_categories_description">Click to expand the sub-categories</string>
+</resources>

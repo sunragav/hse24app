@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/catalogContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/cardview_margin">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/list_item_big_title"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp" />
+
+        <ImageButton
+            android:id="@+id/categoryExpandBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:src="@drawable/ic_arrow_down"
+            app:layout_constraintEnd_toEndOf="@+id/rvCategories"
+            app:layout_constraintTop_toTopOf="@+id/include"
+            android:contentDescription="@string/btn_expand_categories_description" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCategories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/include"
+            tools:listitem="@layout/list_item_small_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
