@@ -1,10 +1,10 @@
-package com.sunragav.hse24app
+package com.sunragav.hse24app.views
 
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.sunragav.hse24app.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,8 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Handler().postDelayed({
-            findNavController(R.layout.activity_main).navigate(Uri.parse("hse24://catalog"))
-            finish()
+            val action = SplashFragmentDirections.actionSplashFragmentToNavCatalog()
+            findNavController(R.id.fragment_nav_host).navigate(action)
         }, 1000)
     }
 }
