@@ -27,5 +27,7 @@ dependencies {
 
     testImplementation "io.mockk:mockk:$mockkVersion"
     testImplementation "junit:junit:$junitVersion"
+
+    implementation project(":domain")
 }
 
