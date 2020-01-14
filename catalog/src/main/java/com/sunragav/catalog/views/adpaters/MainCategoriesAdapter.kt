@@ -1,56 +1,16 @@
 package com.sunragav.catalog.views.adpaters
 
 import android.view.View
-import android.widget.ImageButton
-import android.widget.TextView
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
-import com.sunragav.android_core.adapters.BaseListAdapter
-import com.sunragav.android_core.extensions.runLayoutAnimation
 import com.sunragav.catalog.R
-import com.sunragav.catalog.models.Catalog
 
-class MainCategoriesAdapter : BaseListAdapter<Catalog>(
-    itemsSame = { old, new -> old.categoryId == new.categoryId },
-    contentsSame = { old, new -> old.title == new.title }
-) {
-    private var prevRecyclerView: RecyclerView? = null
-    private var scrollPosX = -1
-    private var scrollPosY = -1
+class MainCategoriesAdapter : AbstractCategoriesAdapter() {
+    override fun initViewsAndAdapter(root: View) {
+        catalogContainer = root.findViewById(R.id.mainCatalogContainer)
+        tvCatalogTitle = root.findViewById(R.id.tvBigCatalogTitle)
+        rvCategories = root.findViewById(R.id.rvSubCategories)
+        subCategoriesAdapter = SubCategoriesAdapter()
+    }
+
     override val itemLayout: Int
         get() = R.layout.catalog_categories_list
-
-    override fun bindItemViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val catalog = getItem(position)
-        holder.itemView.apply {
-            val catalogContainer by lazy { findViewById<MaterialCardView>(R.id.mainCatalogContainer) }
-            val tvCatalogTitle by lazy { findViewById<TextView>(R.id.tvBigCatalogTitle) }
-            val rvCategories by lazy { findViewById<RecyclerView>(R.id.rvSubCategories) }
-            val btnCategoryExpand by lazy { findViewById<ImageButton>(R.id.btnCategoryExpand) }
-            tvCatalogTitle.text = catalog.title
-
-            btnCategoryExpand.visibility =
-                if (catalog.subCatalog.isEmpty()) View.GONE else View.VISIBLE
-            rvCategories.also { rv ->
-                rv.layoutManager = GridLayoutManager(context, 1)
-                rv.adapter = SubCategoriesAdapter().also {
-                    it.submitList(catalog.subCatalog)
-                }
-            }
-            catalogContainer.setOnClickListener {
-                if (scrollPosX != -1) scrollTo(scrollPosX, scrollPosY)
-                if (prevRecyclerView != rvCategories) prevRecyclerView?.visibility = View.GONE
-                prevRecyclerView = rvCategories.also { rv ->
-                    rv.visibility = if (rv.visibility == View.GONE) {
-                        rv.runLayoutAnimation()
-                        View.VISIBLE
-                    } else
-                        View.GONE
-                    scrollPosX = scrollX
-                    scrollPosY = scrollY
-                }
-            }
-        }
-    }
 }

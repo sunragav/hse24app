@@ -24,7 +24,7 @@ abstract class AbstractCategoriesAdapter : BaseListAdapter<Catalog>(
     open var rvCategories: RecyclerView? = null
     open var subCategoriesAdapter: AbstractCategoriesAdapter? = null
 
-    abstract fun initViewsAndAdapter(holder: View)
+    abstract fun initViewsAndAdapter(root: View)
 
     override fun bindItemViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val catalog = getItem(position)
@@ -42,7 +42,7 @@ abstract class AbstractCategoriesAdapter : BaseListAdapter<Catalog>(
                 }
             }
             catalogContainer.setOnClickListener {
-                if (scrollPosX != -1) scrollTo(scrollPosX, scrollPosY)
+                //if (scrollPosX != -1) scrollTo(scrollPosX, scrollPosY)
                 if (prevRecyclerView != rvCategories) prevRecyclerView?.visibility = View.GONE
                 prevRecyclerView = rvCategories?.also { rv ->
                     rv.visibility = if (rv.visibility == View.GONE) {
