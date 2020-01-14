@@ -3,7 +3,9 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainCatalogContainer"
+    android:id="@+id/subCatalogContainer"
+    android:layout_marginStart="@dimen/card_padding"
+    android:layout_marginEnd="@dimen/card_padding"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/cardview_margin">
@@ -15,7 +17,7 @@
 
         <include
             android:id="@+id/include"
-            layout="@layout/list_item_big_title"
+            layout="@layout/list_item_small_title"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp" />
 
@@ -32,11 +34,11 @@
             app:layout_constraintTop_toTopOf="@+id/include" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSubCategories"
-            android:visibility="gone"
+            android:id="@+id/rvTailCategories"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/include"
-            tools:listitem="@layout/sub_catalog_categories_list" />
+            tools:listitem="@layout/tail_catalog_categories" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

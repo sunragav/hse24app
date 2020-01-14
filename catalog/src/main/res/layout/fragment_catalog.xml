@@ -6,13 +6,13 @@
     tools:context=".views.CatalogFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCatalog"
+        android:id="@+id/rvCatagories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/catalog_categories_list" />
 
-    <include layout="@layout/view_empty" />
+    <!--<include layout="@layout/view_empty" />
 
-    <include layout="@layout/view_loading" />
+    <include layout="@layout/view_loading" />-->
 
 </FrameLayout>
