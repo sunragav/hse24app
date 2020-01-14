@@ -1,12 +1,16 @@
 package com.sunragav.catalog.views.adpaters
 
+import android.net.Uri
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.sunragav.android_core.adapters.BaseListAdapter
+import com.sunragav.android_core.deeplinks.DeepLinks
+import com.sunragav.android_core.deeplinks.navigateUriWithDefaultOptions
 import com.sunragav.android_core.extensions.runLayoutAnimation
 import com.sunragav.catalog.R
 import com.sunragav.catalog.models.Catalog
@@ -16,8 +20,6 @@ class SubCategoriesAdapter : BaseListAdapter<Catalog>(
     contentsSame = { old, new -> old.title == new.title }
 ) {
     private var prevRecyclerView: RecyclerView? = null
-    private var scrollPosX = -1
-    private var scrollPosY = -1
     override val itemLayout: Int
         get() = R.layout.sub_catalog_categories_list
 
@@ -39,18 +41,20 @@ class SubCategoriesAdapter : BaseListAdapter<Catalog>(
                 }
             }
             catalogContainer.setOnClickListener {
-                if (scrollPosX != -1) scrollTo(scrollPosX, scrollPosY)
-                if (prevRecyclerView != rvCategories) prevRecyclerView?.visibility = View.GONE
-                prevRecyclerView = rvCategories.also { rv ->
-                    rv.visibility = if (rv.visibility == View.GONE) {
-                        rv.runLayoutAnimation()
-                        View.VISIBLE
-                    } else
-                        View.GONE
-                    scrollPosX = scrollX
-                    scrollPosY = scrollY
+                if (catalog.subCatalog.isEmpty()) {
+                    it.findNavController()
+                        .navigateUriWithDefaultOptions(Uri.parse("${DeepLinks.PRODUCTS}/${catalog.categoryId}"))
+                } else {
+                    if (prevRecyclerView != rvCategories) prevRecyclerView?.visibility = View.GONE
+                    prevRecyclerView = rvCategories.also { rv ->
+                        rv.visibility = if (rv.visibility == View.GONE) {
+                            rv.runLayoutAnimation()
+                            View.VISIBLE
+                        } else
+                            View.GONE
+                        rootRecyclerView?.layoutManager?.scrollToPosition(position)
+                    }
                 }
-
             }
         }
     }

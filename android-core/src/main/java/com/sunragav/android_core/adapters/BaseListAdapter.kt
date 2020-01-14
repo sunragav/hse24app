@@ -15,10 +15,21 @@ abstract class BaseListAdapter<T>(
     override fun areContentsTheSame(oldItem: T, newItem: T): Boolean =
         contentsSame(oldItem, newItem)
 }) {
+    var rootRecyclerView: RecyclerView? = null
     abstract val itemLayout: Int
 
     override fun submitList(list: List<T>?) {
         super.submitList(ArrayList<T>(list ?: listOf()))
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        rootRecyclerView = recyclerView
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        rootRecyclerView = null
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

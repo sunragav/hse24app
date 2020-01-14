@@ -16,4 +16,5 @@
     </fragment>
 
     <include app:graph="@navigation/nav_catalog" />
+    <include app:graph="@navigation/nav_products" />
 </navigation>

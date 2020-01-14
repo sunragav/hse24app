@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_products"
+    app:startDestination="@id/productsFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="com.sunragav.products.views.ProductsFragment"
+        android:label="fragment_products"
+        tools:layout="@layout/fragment_products">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="hse24://products/{catalogId}"
+            android:autoVerify="true" />
+        <argument
+            android:name="catalogId"
+            app:argType="string" />
+    </fragment>
+</navigation>

@@ -1,9 +1,13 @@
 package com.sunragav.catalog.views.adpaters
 
+import android.net.Uri
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.sunragav.android_core.adapters.BaseListAdapter
+import com.sunragav.android_core.deeplinks.DeepLinks
+import com.sunragav.android_core.deeplinks.navigateUriWithDefaultOptions
 import com.sunragav.catalog.R
 import com.sunragav.catalog.models.Catalog
 
@@ -21,7 +25,8 @@ class TailCategoriesAdapter : BaseListAdapter<Catalog>(
             val tvSubCatalogTitle by lazy { findViewById<TextView>(R.id.tvVerySmallCatalogTitle) }
             tvSubCatalogTitle.text = catalog.title
             tailCatalogContainer.setOnClickListener {
-
+                it.findNavController()
+                    .navigateUriWithDefaultOptions(Uri.parse("${DeepLinks.PRODUCTS}/${catalog.categoryId}"))
             }
         }
     }

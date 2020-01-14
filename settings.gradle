@@ -1,2 +1,2 @@
-include ':app', ':catalog', ':android-core', ':domain', ':data', ':presentation'
+include ':app', ':catalog', ':android-core', ':domain', ':data', ':presentation', ':products'
 rootProject.name='hse24app'
