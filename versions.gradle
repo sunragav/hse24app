@@ -8,8 +8,8 @@ ext {
     appVersionName = "1.0"
 
     // libs
-    daggerVersion = "2.24"
-    retrofit2Version = "2.4.0"
+    daggerVersion = "2.25.4"
+    retrofit2Version = "2.6.0"
     moshiRetrofitVersion = "2.3.0"
     moshiVersion = "1.5.0"
     rxJavaVersion = "2.2.0"

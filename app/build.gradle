@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
@@ -15,7 +19,18 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField('String', 'APP_NAME', "\"${project.name}\"")
+            buildConfigField("String", "LOCALE", "\"${locale}\"")
+            buildConfigField("String", "APP_DEVICE", "\"${appDevice}\"")
+            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
+        }
         release {
+            buildConfigField('String', 'APP_NAME', "\"${project.name}\"")
+            buildConfigField("String", "LOCALE", "\"${locale}\"")
+            buildConfigField("String", "APP_DEVICE", "\"${appDevice}\"")
+            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -35,4 +50,11 @@ dependencies {
 
     api project(":android-core")
     api project(":catalog")
+    api project(":domain")
+    api project(":data")
+    api project(":presentation")
+
+    // Dagger dependency injection
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 }
