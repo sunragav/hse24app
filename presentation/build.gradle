@@ -35,4 +35,6 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineAndroidVersion"
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    //paging library
+    api "androidx.paging:paging-runtime:$archPagingVersion"
 }
