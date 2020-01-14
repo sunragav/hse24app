@@ -14,26 +14,30 @@ class ProductsViewModel @Inject constructor(private val getProducts: GetProducts
     val uiState: LiveData<UiState>
         get() = _uiState
     val productsLiveData: LiveData<PagedList<DomainProduct>>
-        get() = Transformations.switchMap(_productsLiveData) { it }
+        get() = Transformations.switchMap(_productsMediatorLiveData) { it }
 
     val productsByCategoryLiveData = MutableLiveData<Int>()
 
     //Private
-    private val _productsLiveData = MediatorLiveData<LiveData<PagedList<DomainProduct>>>()
-
+    private val _productsMediatorLiveData = MediatorLiveData<LiveData<PagedList<DomainProduct>>>()
 
     private val _uiState = MediatorLiveData<UiState>()
 
     //init
     init {
-        _productsLiveData.addSource(productsByCategoryLiveData) { categoryId ->
+        _productsMediatorLiveData.addSource(productsByCategoryLiveData) { categoryId ->
             val productsDataSourceFactory =
                 DomainProductsDataSource.Factory(categoryId, getProducts, viewModelScope)
             val ui = Transformations.switchMap(productsDataSourceFactory.sourceLiveData) {
                 it.getDomainProductsState
             }
             _uiState.addSource(ui) { _uiState.postValue(it) }
-            _productsLiveData.postValue(LivePagedListBuilder(productsDataSourceFactory, 24).build())
+            _productsMediatorLiveData.postValue(
+                LivePagedListBuilder(
+                    productsDataSourceFactory,
+                    PAGE_SIZE
+                ).build()
+            )
         }
     }
 
@@ -53,4 +57,8 @@ class ProductsViewModel @Inject constructor(private val getProducts: GetProducts
     }
 
     /////////////////////////////////////////////////////////////////////
+
+    companion object {
+        const val PAGE_SIZE = 24
+    }
 }
