@@ -29,4 +29,9 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    api project(":domain")
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineAndroidVersion"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
 }
