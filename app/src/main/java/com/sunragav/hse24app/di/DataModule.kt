@@ -2,13 +2,17 @@ package com.sunragav.hse24app.di
 
 import com.squareup.moshi.Moshi
 import com.sunragav.data.catalog.CatalogRepositoryImpl
+import com.sunragav.data.products.ProductsRepositoryImpl
+import com.sunragav.data.remote.RemoteProductsService
 import com.sunragav.data.remote.catalog.RemoteCatalogService
 import com.sunragav.data.remote.catalog.RemoteCatalogSource
 import com.sunragav.data.remote.catalog.RemoteCatalogSourceImpl
 import com.sunragav.data.remote.interceptor.ApiInterceptor
 import com.sunragav.data.remote.qualifiers.AppDevice
+import com.sunragav.data.remote.qualifiers.ImgBaseUrl
 import com.sunragav.data.remote.qualifiers.Locale
 import com.sunragav.domain.repository.CatalogRepository
+import com.sunragav.domain.repository.ProductsRepository
 import com.sunragav.hse24app.BuildConfig
 import dagger.Binds
 import dagger.Module
@@ -35,6 +39,11 @@ class DataModule {
         fun bindsRemoteRepository(
             remoteDataSourceImpl: RemoteCatalogSourceImpl
         ): RemoteCatalogSource
+
+        @Binds
+        fun bindsProductRepository(
+            repoImpl: ProductsRepositoryImpl
+        ): ProductsRepository
     }
 
     @Provides
@@ -45,11 +54,21 @@ class DataModule {
     @AppDevice
     fun provideAppDevice() = BuildConfig.APP_DEVICE
 
+    @Provides
+    @ImgBaseUrl
+    fun provideImgBaseUrl() = BuildConfig.IMG_BASE_URL
+
 
     @Provides
     @Singleton
     fun provideCatalogService(retrofit: Retrofit): RemoteCatalogService =
         retrofit.create(RemoteCatalogService::class.java)
+
+
+    @Provides
+    @Singleton
+    fun provideProductsService(retrofit: Retrofit): RemoteProductsService =
+        retrofit.create(RemoteProductsService::class.java)
 
 
     @Provides
