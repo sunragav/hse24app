@@ -1,6 +1,6 @@
-package com.sunragav.data
+package com.sunragav.data.catalog
 
-import com.sunragav.data.remote.RemoteCatalogSource
+import com.sunragav.data.remote.catalog.RemoteCatalogSource
 import com.sunragav.domain.models.DomainCatalog
 import com.sunragav.domain.repository.CatalogRepository
 import kotlinx.coroutines.Dispatchers
@@ -12,5 +12,4 @@ class CatalogRepositoryImpl @Inject constructor(private val remoteRepository: Re
     override suspend fun getCatalog(): List<DomainCatalog> = withContext(Dispatchers.IO) {
         remoteRepository.getCatalog()
     }
-
 }

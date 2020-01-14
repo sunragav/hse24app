@@ -12,3 +12,8 @@ annotation class Locale
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
 annotation class AppDevice
+
+@Qualifier
+@MustBeDocumented
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ImgBaseUrl

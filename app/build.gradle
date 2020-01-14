@@ -23,13 +23,15 @@ android {
             buildConfigField('String', 'APP_NAME', "\"${project.name}\"")
             buildConfigField("String", "LOCALE", "\"${locale}\"")
             buildConfigField("String", "APP_DEVICE", "\"${appDevice}\"")
-            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
+            buildConfigField("String", "BASE_URL", "\"${debugBaseUrl}\"")
+            buildConfigField("String", "IMG_BASE_URL", "\"${imageBaseUrl}\"")
         }
         release {
             buildConfigField('String', 'APP_NAME', "\"${project.name}\"")
             buildConfigField("String", "LOCALE", "\"${locale}\"")
             buildConfigField("String", "APP_DEVICE", "\"${appDevice}\"")
-            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
+            buildConfigField("String", "BASE_URL", "\"${prodBaseUrl}\"")
+            buildConfigField("String", "IMG_BASE_URL", "\"${imageBaseUrl}\"")
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
