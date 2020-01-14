@@ -1,10 +1,11 @@
 package com.sunragav.presentation
 
 import androidx.lifecycle.*
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.sunragav.domain.models.DomainProduct
 import com.sunragav.domain.usecases.GetProducts
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.launch
+import com.sunragav.presentation.products.paging.DomainProductsDataSource
 import javax.inject.Inject
 
 
@@ -12,28 +13,27 @@ class ProductsViewModel @Inject constructor(private val getProducts: GetProducts
 
     val uiState: LiveData<UiState>
         get() = _uiState
-    val productsLiveData: LiveData<List<DomainProduct>>
-        get() = _productsLiveData
+    val productsLiveData: LiveData<PagedList<DomainProduct>>
+        get() = Transformations.switchMap(_productsLiveData) { it }
 
     val productsByCategoryLiveData = MutableLiveData<Int>()
 
-
     //Private
-    private val _uiState = MutableLiveData<UiState>()
-    private val _productsLiveData = MediatorLiveData<List<DomainProduct>>()
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        _uiState.postValue(UiState.Error(throwable))
-    }
+    private val _productsLiveData = MediatorLiveData<LiveData<PagedList<DomainProduct>>>()
 
+
+    private val _uiState = MediatorLiveData<UiState>()
 
     //init
     init {
-        _productsLiveData.addSource(productsByCategoryLiveData) {
-            viewModelScope.launch(exceptionHandler) {
-                _uiState.postValue(UiState.Loading)
-                _productsLiveData.postValue(getProducts(it, 0))
-                _uiState.postValue(UiState.Complete)
+        _productsLiveData.addSource(productsByCategoryLiveData) { categoryId ->
+            val productsDataSourceFactory =
+                DomainProductsDataSource.Factory(categoryId, getProducts, viewModelScope)
+            val ui = Transformations.switchMap(productsDataSourceFactory.sourceLiveData) {
+                it.getDomainProductsState
             }
+            _uiState.addSource(ui) { _uiState.postValue(it) }
+            _productsLiveData.postValue(LivePagedListBuilder(productsDataSourceFactory, 24).build())
         }
     }
 
