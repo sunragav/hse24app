@@ -10,7 +10,7 @@ data class ProductResult(
     val imageUris: List<String>
 )
 
-data class DataWrapper<out T>(
+data class ProductResultWrapper<out T>(
     val resultCount: Int,
     val productResults: T
 )
