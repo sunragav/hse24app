@@ -34,6 +34,7 @@ class CartViewModel @Inject constructor() : ViewModel() {
 
             }
         }
+        _cartMediatorLiveData.postValue(map)
         _cartCountMediatorLiveData.postValue(map.size)
         _cartAmountMediatorLiveData.postValue(
             map.map { it.key.productPrice.split(" ")[0].toFloat() * it.value }.sum()
