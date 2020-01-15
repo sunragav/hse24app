@@ -49,10 +49,12 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha03'
 
     api project(":android-core")
     api project(":catalog")
     api project(":products")
+    api project(":pdp")
     api project(":domain")
     api project(":data")
     api project(":presentation")

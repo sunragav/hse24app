@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sunragav.presentation.ProductsViewModel
+import com.sunragav.presentation.UiState
 import com.sunragav.products.R
 import com.sunragav.products.views.adapters.ProductsAdpater
 import dagger.android.support.AndroidSupportInjection
@@ -52,6 +53,13 @@ class ProductsFragment : Fragment() {
 
         viewModel.productsLiveData.observe(this, Observer {
             adapter.submitList(it)
+        })
+
+        viewModel.uiState.observe(this, Observer {
+            view.rvProducts.visibility = if (it == UiState.Complete) View.VISIBLE else View.GONE
+            view.vLoading.visibility = if (it == UiState.Loading) View.VISIBLE else View.GONE
+            view.vEmpty.visibility =
+                if (it is UiState.Error || it == UiState.Empty) View.VISIBLE else View.GONE
         })
 
         return view

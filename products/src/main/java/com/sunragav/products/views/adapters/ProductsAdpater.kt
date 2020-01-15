@@ -41,7 +41,7 @@ class ProductsAdpater : BasePagedListAdapter<DomainProduct>(
                 }
                 setOnClickListener {
                     it.findNavController()
-                        .navigateUriWithDefaultOptions(Uri.parse("${DeepLinks.PRODUCTS}/${product.sku}"))
+                        .navigateUriWithDefaultOptions(Uri.parse("${DeepLinks.PDP}/${product.sku}"))
                 }
                 btnAddtoCart.setOnClickListener {
                     it.animate {
