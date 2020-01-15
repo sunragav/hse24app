@@ -3,6 +3,7 @@ package com.sunragav.hse24app.di
 import com.sunragav.domain.usecases.GetCatalog
 import com.sunragav.domain.usecases.GetPDP
 import com.sunragav.domain.usecases.GetProducts
+import com.sunragav.presentation.CartViewModel
 import com.sunragav.presentation.CatalogViewModel
 import com.sunragav.presentation.PDPViewModel
 import com.sunragav.presentation.ProductsViewModel
@@ -25,4 +26,8 @@ class PresentationModule {
     fun providePdpViewModelFactory(
         getPDP: GetPDP
     ) = PDPViewModel.Factory(getPDP)
+
+    @Provides
+    fun provideCartViewModelFactory(
+    ) = CartViewModel.Factory()
 }
