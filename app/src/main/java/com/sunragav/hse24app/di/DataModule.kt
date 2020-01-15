@@ -3,11 +3,13 @@ package com.sunragav.hse24app.di
 import com.squareup.moshi.Moshi
 import com.sunragav.data.catalog.CatalogRepositoryImpl
 import com.sunragav.data.products.ProductsRepositoryImpl
-import com.sunragav.data.remote.RemoteProductsService
 import com.sunragav.data.remote.catalog.RemoteCatalogService
 import com.sunragav.data.remote.catalog.RemoteCatalogSource
 import com.sunragav.data.remote.catalog.RemoteCatalogSourceImpl
 import com.sunragav.data.remote.interceptor.ApiInterceptor
+import com.sunragav.data.remote.products.RemoteProductsService
+import com.sunragav.data.remote.products.RemoteProductsSource
+import com.sunragav.data.remote.products.RemoteProductsSourceImpl
 import com.sunragav.data.remote.qualifiers.AppDevice
 import com.sunragav.data.remote.qualifiers.ImgBaseUrl
 import com.sunragav.data.remote.qualifiers.Locale
@@ -36,7 +38,7 @@ class DataModule {
         ): CatalogRepository
 
         @Binds
-        fun bindsRemoteRepository(
+        fun bindsRemoteCatalogRepository(
             remoteDataSourceImpl: RemoteCatalogSourceImpl
         ): RemoteCatalogSource
 
@@ -44,6 +46,12 @@ class DataModule {
         fun bindsProductRepository(
             repoImpl: ProductsRepositoryImpl
         ): ProductsRepository
+
+        @Binds
+        fun bindsRemoteProductsRepository(
+            remoteDataSourceImpl: RemoteProductsSourceImpl
+        ): RemoteProductsSource
+
     }
 
     @Provides

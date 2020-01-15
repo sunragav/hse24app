@@ -10,13 +10,13 @@ data class ProductResult(
     val imageUris: List<String>
 )
 
-data class ProductResultWrapper<out T>(
+data class ProductResultWrapper(
     val resultCount: Int,
-    val productResults: T
+    val productResults: List<ProductResult>
 )
 
 data class ProductPrice(
-    val price: Int,
+    val price: Float,
     val currency: String
 )
 

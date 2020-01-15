@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class DomainRemoteModelMapper @Inject constructor(@ImgBaseUrl private val IMAGE_URL: String) {
     companion object {
-        const val PIC_FILE = "_pics480.jpg"
+        const val PIC_FILE = "pics640.jpg"
     }
     fun toDomain(remote: CatalogModel): DomainCatalog {
         return DomainCatalog(

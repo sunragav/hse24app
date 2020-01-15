@@ -5,6 +5,7 @@ import android.content.Context
 import com.sunragav.catalog.views.CatalogFragment
 import com.sunragav.hse24app.views.MainActivity
 import com.sunragav.hse24app.views.SplashFragment
+import com.sunragav.products.views.ProductsFragment
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -23,4 +24,7 @@ abstract class AppModule {
 
     @ContributesAndroidInjector
     internal abstract fun contributesCatalogFragment(): CatalogFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun contributesProductsFragment(): ProductsFragment
 }
