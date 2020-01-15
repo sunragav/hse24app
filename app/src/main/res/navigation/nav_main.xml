@@ -20,4 +20,5 @@
     <include app:graph="@navigation/nav_catalog" />
     <include app:graph="@navigation/nav_products" />
     <include app:graph="@navigation/nav_pdp" />
+    <include app:graph="@navigation/nav_cart" />
 </navigation>

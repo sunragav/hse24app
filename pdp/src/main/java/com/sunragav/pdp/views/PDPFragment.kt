@@ -14,9 +14,15 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.sunragav.android_core.animations.animate
+import com.sunragav.domain.models.DomainPDP
+import com.sunragav.domain.models.DomainProduct
 import com.sunragav.pdp.R
+import com.sunragav.presentation.Action
+import com.sunragav.presentation.CartOperation.Add
+import com.sunragav.presentation.CartViewModel
 import com.sunragav.presentation.PDPViewModel
 import com.sunragav.presentation.UiState
 import dagger.android.support.AndroidSupportInjection
@@ -55,6 +61,8 @@ class PDPFragment : Fragment() {
             val ratings by lazy { findViewById<RatingBar>(R.id.ratingBar) }
             val btnAddtoCart by lazy { findViewById<ImageButton>(R.id.btnAddtoCart) }
 
+            val cartViewModel =
+                activity?.let { ViewModelProviders.of(it).get(CartViewModel::class.java) }
             viewModel.pdpLiveData.observe(lifecycleOwner, Observer { product ->
                 with(product) {
                     com.bumptech.glide.Glide.with(context)
@@ -71,7 +79,12 @@ class PDPFragment : Fragment() {
 
                 btnAddtoCart.setOnClickListener {
                     it.animate {
-
+                        cartViewModel?.post(
+                            Action(
+                                Add,
+                                toDomain(product)
+                            )
+                        )
                     }
                 }
             })
@@ -86,8 +99,18 @@ class PDPFragment : Fragment() {
             })
         }
 
-
         return view
+    }
+
+    private fun toDomain(pdp: DomainPDP): DomainProduct {
+        return DomainProduct(
+            sku = pdp.sku,
+            nameShort = pdp.nameShort,
+            brandNameLong = pdp.brandNameLong,
+            productPrice = pdp.productPrice,
+            averageStars = pdp.averageStars,
+            imageUris = pdp.imageUris
+        )
     }
 
 
