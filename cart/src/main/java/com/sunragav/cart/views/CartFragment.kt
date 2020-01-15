@@ -37,6 +37,7 @@ class CartFragment : Fragment() {
 
         cartViewModel.cartListLiveData.observe(this, Observer { cartDomainMap ->
             adapter.submitList(cartDomainMap.map { it.key })
+            adapter.notifyDataSetChanged()
         })
 
         cartViewModel.cartCount.observe(this, Observer {
