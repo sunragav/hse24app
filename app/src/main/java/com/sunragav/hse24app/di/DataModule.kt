@@ -2,11 +2,14 @@ package com.sunragav.hse24app.di
 
 import com.squareup.moshi.Moshi
 import com.sunragav.data.catalog.CatalogRepositoryImpl
+import com.sunragav.data.pdp.PDPRepositoryImpl
 import com.sunragav.data.products.ProductsRepositoryImpl
 import com.sunragav.data.remote.catalog.RemoteCatalogService
 import com.sunragav.data.remote.catalog.RemoteCatalogSource
 import com.sunragav.data.remote.catalog.RemoteCatalogSourceImpl
 import com.sunragav.data.remote.interceptor.ApiInterceptor
+import com.sunragav.data.remote.pdp.RemotePDPSource
+import com.sunragav.data.remote.pdp.RemotePDPSourceImpl
 import com.sunragav.data.remote.products.RemoteProductsService
 import com.sunragav.data.remote.products.RemoteProductsSource
 import com.sunragav.data.remote.products.RemoteProductsSourceImpl
@@ -14,6 +17,7 @@ import com.sunragav.data.remote.qualifiers.AppDevice
 import com.sunragav.data.remote.qualifiers.ImgBaseUrl
 import com.sunragav.data.remote.qualifiers.Locale
 import com.sunragav.domain.repository.CatalogRepository
+import com.sunragav.domain.repository.PDPRepository
 import com.sunragav.domain.repository.ProductsRepository
 import com.sunragav.hse24app.BuildConfig
 import dagger.Binds
@@ -38,7 +42,7 @@ class DataModule {
         ): CatalogRepository
 
         @Binds
-        fun bindsRemoteCatalogRepository(
+        fun bindsRemoteCatalogSource(
             remoteDataSourceImpl: RemoteCatalogSourceImpl
         ): RemoteCatalogSource
 
@@ -48,9 +52,19 @@ class DataModule {
         ): ProductsRepository
 
         @Binds
-        fun bindsRemoteProductsRepository(
+        fun bindsRemoteProductsSource(
             remoteDataSourceImpl: RemoteProductsSourceImpl
         ): RemoteProductsSource
+
+        @Binds
+        fun bindsPDPRepository(
+            repoImpl: PDPRepositoryImpl
+        ): PDPRepository
+
+        @Binds
+        fun bindsRemotePDPSource(
+            remoteDataSourceImpl: RemotePDPSourceImpl
+        ): RemotePDPSource
 
     }
 
