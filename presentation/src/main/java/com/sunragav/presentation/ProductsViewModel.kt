@@ -22,18 +22,19 @@ class ProductsViewModel @Inject constructor(private val getProducts: GetProducts
     //Private
     private val _productsMediatorLiveData = MediatorLiveData<LiveData<PagedList<DomainProduct>>>()
 
-    private val _uiState = MediatorLiveData<UiState>()
+    private val _uiState = MutableLiveData<UiState>()
 
     //init
     init {
         _productsMediatorLiveData.addSource(productsByCategoryLiveData) { categoryId ->
             viewModelScope.launch {
                 val productsDataSourceFactory =
-                    DomainProductsDataSource.Factory(categoryId, getProducts, viewModelScope)
-                val ui = Transformations.switchMap(productsDataSourceFactory.sourceLiveData) {
-                    it.getDomainProductsState
-                }
-                _uiState.addSource(ui) { _uiState.postValue(it) }
+                    DomainProductsDataSource.Factory(
+                        categoryId,
+                        getProducts,
+                        viewModelScope,
+                        _uiState
+                    )
                 _productsMediatorLiveData.postValue(
                     LivePagedListBuilder(
                         productsDataSourceFactory,

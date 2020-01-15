@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">android-core</string>
     <string name="add_to_cart">Add to cart</string>
+    <string name="empty_result_from_api">Sorry No results!</string>
 </resources>

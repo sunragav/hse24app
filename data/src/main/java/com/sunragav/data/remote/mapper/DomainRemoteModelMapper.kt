@@ -23,24 +23,25 @@ class DomainRemoteModelMapper @Inject constructor(@ImgBaseUrl private val IMAGE_
     fun toDomain(remote: ProductResult): DomainProduct {
         return DomainProduct(
             sku = remote.sku,
-            nameShort = remote.nameShort,
-            brandNameLong = remote.brandNameLong,
+            nameShort = remote.nameShort ?: "",
+            brandNameLong = remote.brandNameLong ?: "",
             productPrice = with(remote.productPrice) { "$price $currency" },
             averageStars = remote.averageStars,
-            imageUris = remote.imageUris.map { "$IMAGE_URL$it$PIC_FILE" }
+            imageUris = remote.imageUris?.map { "$IMAGE_URL$it$PIC_FILE" } ?: listOf("")
         )
     }
 
     fun toDomain(remote: PDPModel): DomainPDP {
         return DomainPDP(
             sku = remote.sku,
-            nameShort = remote.nameShort,
+            nameShort = remote.nameShort ?: "",
+            brandNameLong = remote.brandNameLong ?: "",
             productPrice = with(remote.productPrice) { "$price $currency" },
             averageStars = remote.averageStars,
             imageUris = remote.imageUris.map { "$IMAGE_URL$it$PIC_FILE" },
-            title = remote.title,
-            longDescription = remote.longDescription,
-            usps = remote.usps
+            title = remote.title ?: "No title available",
+            longDescription = remote.longDescription ?: "",
+            usps = remote.usps ?: listOf("")
         )
     }
 }

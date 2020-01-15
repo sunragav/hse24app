@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.ProductsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -11,4 +12,22 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/list_item_with_image" />
 
+    <com.sunragav.android_core.views.EmptyView
+        android:id="@+id/vEmpty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/empty_result_from_api"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+    <com.sunragav.android_core.views.LoadingView
+        android:id="@+id/vLoading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

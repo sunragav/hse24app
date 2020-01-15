@@ -12,9 +12,12 @@
         tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_nav_catalog"
-            app:destination="@id/nav_catalog" />
+            app:destination="@id/nav_catalog"
+            app:popUpTo="@+id/splashFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <include app:graph="@navigation/nav_catalog" />
     <include app:graph="@navigation/nav_products" />
+    <include app:graph="@navigation/nav_pdp" />
 </navigation>

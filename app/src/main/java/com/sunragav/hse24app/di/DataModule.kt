@@ -8,6 +8,7 @@ import com.sunragav.data.remote.catalog.RemoteCatalogService
 import com.sunragav.data.remote.catalog.RemoteCatalogSource
 import com.sunragav.data.remote.catalog.RemoteCatalogSourceImpl
 import com.sunragav.data.remote.interceptor.ApiInterceptor
+import com.sunragav.data.remote.pdp.RemotePDPService
 import com.sunragav.data.remote.pdp.RemotePDPSource
 import com.sunragav.data.remote.pdp.RemotePDPSourceImpl
 import com.sunragav.data.remote.products.RemoteProductsService
@@ -91,6 +92,11 @@ class DataModule {
     @Singleton
     fun provideProductsService(retrofit: Retrofit): RemoteProductsService =
         retrofit.create(RemoteProductsService::class.java)
+
+    @Provides
+    @Singleton
+    fun providePdpService(retrofit: Retrofit): RemotePDPService =
+        retrofit.create(RemotePDPService::class.java)
 
 
     @Provides

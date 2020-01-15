@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_pdp"
+    app:startDestination="@id/pdpFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/pdpFragment"
+        android:name="com.sunragav.pdp.views.PDPFragment"
+        android:label="fragment_pdp"
+        tools:layout="@layout/fragment_pdp">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="hse24://pdp/{sku}"
+            android:autoVerify="true" />
+        <argument
+            android:name="sku"
+            app:argType="string" />
+    </fragment>
+</navigation>

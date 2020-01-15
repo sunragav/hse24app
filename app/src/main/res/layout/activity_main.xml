@@ -15,4 +15,34 @@
         app:defaultNavHost="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:navGraph="@navigation/nav_main" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btnCart"
+        style="@style/Widget.MaterialComponents.Badge"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="12sp"
+        app:icon="@drawable/ic_shopping_bag"
+        app:iconTint="@android:color/transparent"
+        app:iconTintMode="add"
+        app:backgroundTint="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvCartCount"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle_drawable"
+        android:elevation="6dp"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="12sp"
+        app:layout_constraintTop_toTopOf="@id/btnCart"
+        app:layout_constraintEnd_toEndOf="@id/btnCart" />
 </androidx.constraintlayout.widget.ConstraintLayout>
