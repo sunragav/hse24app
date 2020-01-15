@@ -1,4 +1,4 @@
-package com.sunragav.data.remote
+package com.sunragav.data.remote.products
 
 import com.sunragav.data.remote.mapper.DomainRemoteModelMapper
 import com.sunragav.domain.models.DomainProduct

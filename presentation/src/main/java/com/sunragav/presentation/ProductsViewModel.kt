@@ -6,6 +6,7 @@ import androidx.paging.PagedList
 import com.sunragav.domain.models.DomainProduct
 import com.sunragav.domain.usecases.GetProducts
 import com.sunragav.presentation.products.paging.DomainProductsDataSource
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -26,18 +27,20 @@ class ProductsViewModel @Inject constructor(private val getProducts: GetProducts
     //init
     init {
         _productsMediatorLiveData.addSource(productsByCategoryLiveData) { categoryId ->
-            val productsDataSourceFactory =
-                DomainProductsDataSource.Factory(categoryId, getProducts, viewModelScope)
-            val ui = Transformations.switchMap(productsDataSourceFactory.sourceLiveData) {
-                it.getDomainProductsState
+            viewModelScope.launch {
+                val productsDataSourceFactory =
+                    DomainProductsDataSource.Factory(categoryId, getProducts, viewModelScope)
+                val ui = Transformations.switchMap(productsDataSourceFactory.sourceLiveData) {
+                    it.getDomainProductsState
+                }
+                _uiState.addSource(ui) { _uiState.postValue(it) }
+                _productsMediatorLiveData.postValue(
+                    LivePagedListBuilder(
+                        productsDataSourceFactory,
+                        PAGE_SIZE
+                    ).build()
+                )
             }
-            _uiState.addSource(ui) { _uiState.postValue(it) }
-            _productsMediatorLiveData.postValue(
-                LivePagedListBuilder(
-                    productsDataSourceFactory,
-                    PAGE_SIZE
-                ).build()
-            )
         }
     }
 
