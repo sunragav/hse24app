@@ -28,7 +28,7 @@ class ProductsFragment : Fragment() {
 
     private val args: ProductsFragmentArgs by navArgs()
 
-    val viewModel: ProductsViewModel by viewModels(factoryProducer = { factory })
+    private val viewModel: ProductsViewModel by viewModels(factoryProducer = { factory })
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -43,6 +43,7 @@ class ProductsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_products, container, false)
         val adapter = ProductsAdpater()
 
+        adapter.setHasStableIds(true)
         view.rvProducts.also { rv ->
             rv.layoutManager = GridLayoutManager(context, 1)
 

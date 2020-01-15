@@ -1,22 +1,45 @@
 package com.sunragav.presentation
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
 import com.sunragav.domain.models.DomainProduct
-import com.sunragav.presentation.CartViewModel.CartOperation.Add
-import com.sunragav.presentation.CartViewModel.CartOperation.Remove
+import com.sunragav.presentation.CartOperation.Add
+import com.sunragav.presentation.CartOperation.Remove
 import javax.inject.Inject
+import kotlin.collections.set
 
+sealed class CartOperation {
+    object Add : CartOperation()
+    object Remove : CartOperation()
+}
+
+class Action(val type: CartOperation, val domainProduct: DomainProduct)
 
 class CartViewModel @Inject constructor() : ViewModel() {
+    fun post(productAction: Action) {
+        val map = _cartMediatorLiveData.value!!
+        val prod = productAction.domainProduct
+        val count = map[prod]
+        when (productAction.type) {
+            is Add -> {
+                if (count == null) map[prod] = 1
+                else map[prod] = count + 1
+            }
+            is Remove -> {
+                if (count == 1)
+                    map.remove(prod)
+                else if (count != null)
+                    map[prod] = count - 1
 
-    sealed class CartOperation {
-        class Add : CartOperation()
-        class Remove : CartOperation()
+            }
+        }
+        _cartCountMediatorLiveData.postValue(map.size)
+        _cartAmountMediatorLiveData.postValue(
+            map.map { it.key.productPrice.split(" ")[0].toFloat() * it.value }.sum()
+        )
     }
 
-    class Action(val type: CartOperation, val domainProduct: DomainProduct)
-
-    val cartLiveData = MutableLiveData<Action>()
 
     val cartListLiveData: LiveData<MutableMap<DomainProduct, Int>>
         get() = _cartMediatorLiveData
@@ -35,44 +58,6 @@ class CartViewModel @Inject constructor() : ViewModel() {
 
     //init
     init {
-        _cartMediatorLiveData.addSource(cartLiveData) { productAction ->
-            if (_cartMediatorLiveData.value == null) _cartMediatorLiveData.value =
-                mutableMapOf()
-            val map = _cartMediatorLiveData.value!!
-            val prod = productAction.domainProduct
-            val count = map[prod]
-            when (productAction.type) {
-                is Add -> {
-                    if (count == null) map[prod] = 1
-                    else map[prod] = count + 1
-                }
-                is Remove -> {
-                    if (count == null) map[prod] = 0
-                    else if (count > 1)
-                        map[prod] = count - 1
-                }
-            }
-        }
-        _cartCountMediatorLiveData.addSource(_cartMediatorLiveData) {
-            _cartCountMediatorLiveData.postValue(it.size)
-        }
-        _cartAmountMediatorLiveData.addSource(_cartMediatorLiveData) { productMap ->
-            _cartAmountMediatorLiveData.postValue(productMap.map { it.key.productPrice.split(" ")[0].toFloat() * it.value }.sum())
-        }
+        _cartMediatorLiveData.value = mutableMapOf()
     }
-
-    /////////////////////////////////////////////////////////////////////
-    //ViewModelFactory
-
-    class Factory : ViewModelProvider.NewInstanceFactory() {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(CartViewModel::class.java)) {
-                return CartViewModel() as T
-            }
-            throw IllegalArgumentException("ViewModel not found.")
-        }
-    }
-
-    /////////////////////////////////////////////////////////////////////
 }
