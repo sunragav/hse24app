@@ -1,8 +1,10 @@
 package com.sunragav.hse24app.di
 
 import com.sunragav.domain.usecases.GetCatalog
+import com.sunragav.domain.usecases.GetPDP
 import com.sunragav.domain.usecases.GetProducts
 import com.sunragav.presentation.CatalogViewModel
+import com.sunragav.presentation.PDPViewModel
 import com.sunragav.presentation.ProductsViewModel
 import dagger.Module
 import dagger.Provides
@@ -18,4 +20,9 @@ class PresentationModule {
     fun provideProductsViewModelFactory(
         getProducts: GetProducts
     ) = ProductsViewModel.Factory(getProducts)
+
+    @Provides
+    fun providePdpViewModelFactory(
+        getPDP: GetPDP
+    ) = PDPViewModel.Factory(getPDP)
 }
